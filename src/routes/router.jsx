@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardHome from "../pages/Dashboard/DashBoardHome/DashboardHome";
 import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest";
 import MydDnationRequests from "../pages/Dashboard/MydDnationRequests";
+import Funding from "../pages/Funding/Funding";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,14 @@ export const router = createBrowserRouter([
       {
         path: "search",
         Component: Search,
+      },
+      {
+        path: "funding",
+        element: (
+          <PrivateRoute>
+            <Funding></Funding>
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -66,15 +75,19 @@ export const router = createBrowserRouter([
         path: "create-donation-request",
         Component: CreateDonationRequest,
         loader: async () => {
-          const districts = await fetch("/districts.json").then((res) =>res.json());
-          const upazilas = await fetch("/upazilas.json").then((res) =>res.json());
+          const districts = await fetch("/districts.json").then((res) =>
+            res.json()
+          );
+          const upazilas = await fetch("/upazilas.json").then((res) =>
+            res.json()
+          );
           return { districts, upazilas };
         },
       },
       {
-        path: 'my-donation-requests',
-        Component: MydDnationRequests
-      }
+        path: "my-donation-requests",
+        Component: MydDnationRequests,
+      },
     ],
   },
 ]);

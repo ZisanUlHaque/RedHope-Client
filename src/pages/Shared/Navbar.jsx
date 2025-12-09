@@ -3,8 +3,7 @@ import React from "react";
 import { Link, NavLink } from "react-router";
 import Logo from "../../Components/logo";
 import useAuth from "../../hooks/useAuth";
-import userimg from '../../assets/user.png'
-
+import userimg from "../../assets/user.png";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -20,10 +19,7 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to="">Donation request</NavLink>
-      </li>
-      <li>
-        <NavLink to="">About Us</NavLink>
+        <NavLink to="/dashboard/create-donation-request">Donation request</NavLink>
       </li>
 
       {user && (
@@ -31,8 +27,14 @@ const Navbar = () => {
           <li>
             <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
+          <li>
+            <NavLink to="/funding">Funding</NavLink>
+          </li>
         </>
       )}
+      <li>
+        <NavLink to="">About Us</NavLink>
+      </li>
     </>
   );
   return (
@@ -63,8 +65,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="
-        ">
+        <a className="text-xl">
           <Logo></Logo>
         </a>
       </div>
@@ -72,41 +73,41 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-<div className="navbar-end flex items-center gap-4">
-  {/* If user not logged in */}
-  {!user && (
-    <>
-      <Link className="btn" to="/login">Login</Link>
-      <div className="w-10 h-10 rounded-full overflow-hidden">
-        <img src={userimg} alt="Default Avatar" />
-      </div>
-    </>
-  )}
+        <div className="navbar-end flex items-center gap-4">
+          {/* If user not logged in */}
+          {!user && (
+            <>
+              <Link className="btn" to="/login">
+                Login
+              </Link>
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <img src={userimg} alt="Default Avatar" />
+              </div>
+            </>
+          )}
 
-  {/* If user is logged in */}
-  {user && (
-    <div className="dropdown dropdown-end">
-      <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
-          <img src={user.photoURL || userimg} alt="User Avatar" />
+          {/* If user is logged in */}
+          {user && (
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img src={user.photoURL || userimg} alt="User Avatar" />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <NavLink to="/">Profile</NavLink>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
-      </label>
-      <ul
-        tabIndex={0}
-        className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-      >
-        <li>
-          <NavLink to="/">Profile</NavLink>
-        </li>
-        <li>
-          <button onClick={handleLogout}>Logout</button>
-        </li>
-      </ul>
-    </div>
-  )}
-</div>
-
-
       </div>
     </div>
   );
