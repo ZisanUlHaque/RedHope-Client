@@ -63,7 +63,8 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
+        <a className="
+        ">
           <Logo></Logo>
         </a>
       </div>
