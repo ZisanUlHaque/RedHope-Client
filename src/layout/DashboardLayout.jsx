@@ -1,15 +1,17 @@
 import React from "react";
-import { CiDeliveryTruck } from "react-icons/ci";
-
 import { Link, NavLink, Outlet } from "react-router";
 
-import { RiBikeFill } from "react-icons/ri";
-import { SiGoogletasks } from "react-icons/si";
-
+// icons
 import { IoCreateOutline } from "react-icons/io5";
 import { IoMdGitPullRequest } from "react-icons/io";
+import { SiGoogletasks } from "react-icons/si";
+import { FaUser } from "react-icons/fa";
+
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role, roleLoading } = useRole();
+
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -19,7 +21,7 @@ const DashboardLayout = () => {
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
+            className="btn btn-square btn-ghost lg:hidden"
           >
             {/* Sidebar toggle icon */}
             <svg
@@ -37,10 +39,13 @@ const DashboardLayout = () => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <div className="px-4">RedHope Dashboard</div>
+          <div className="px-4 font-semibold">Blood Donation Dashboard</div>
         </nav>
+
         {/* Page content here */}
-        <Outlet></Outlet>
+        <div className="p-4 md:p-6">
+          <Outlet />
+        </div>
       </div>
 
       <div className="drawer-side is-drawer-close:overflow-visible">
@@ -49,10 +54,10 @@ const DashboardLayout = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+        <div className="flex min-height-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
           {/* Sidebar content here */}
           <ul className="menu w-full grow">
-            {/* List item */}
+            {/* Home / Dashboard common links */}
             <li>
               <Link
                 to="/"
@@ -77,101 +82,119 @@ const DashboardLayout = () => {
               </Link>
             </li>
 
-            {/* our dashboard links */}
             <li>
               <NavLink
+                to="/dashboard"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Create-Donation-Request"
-                to="/dashboard/create-donation-request"
+                data-tip="Dashboard Home"
               >
-                <IoCreateOutline />
-                <span className="is-drawer-close:hidden">Create Donation Request</span>
+                <SiGoogletasks />
+                <span className="is-drawer-close:hidden">Dashboard Home</span>
               </NavLink>
             </li>
             <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My-Donation-Requests"
-                to="/dashboard/my-donation-requests"
-              >
-                <IoMdGitPullRequest />
-                <span className="is-drawer-close:hidden">My Donation Requests</span>
-              </NavLink>
+              <NavLink to="/dashboard/profile">Profile</NavLink>
             </li>
+            {/* LOADING state */}
+            {roleLoading && (
+              <li>
+                <span className="flex items-center gap-2">
+                  <span className="loading loading-spinner loading-sm" />
+                  <span className="is-drawer-close:hidden">Loading menu...</span>
+                </span>
+              </li>
+            )}
 
-
-            {/* {role === "rider" && (
+            {/* DONOR MENU */}
+            {!roleLoading && role === "donor" && (
               <>
-
+                <li className="mt-2 menu-title is-drawer-close:hidden">
+                  <span>Donor</span>
+                </li>
                 <li>
                   <NavLink
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Assigned Deliveries"
-                    to="/dashboard/assign-deliveries"
+                    data-tip="Create Donation Request"
+                    to="/dashboard/create-donation-request"
                   >
-                    <FaTasks></FaTasks>
+                    <IoCreateOutline />
                     <span className="is-drawer-close:hidden">
-                      Assigned Deliveries
+                      Create Donation Request
                     </span>
                   </NavLink>
                 </li>
-                                <li>
+                <li>
                   <NavLink
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Completed Deliveries"
-                    to="/dashboard/completed-deliveries"
+                    data-tip="My Donation Requests"
+                    to="/dashboard/my-donation-requests"
                   >
-                    <SiGoogletasks></SiGoogletasks>
+                    <IoMdGitPullRequest />
                     <span className="is-drawer-close:hidden">
-                      Completed Deliveries
+                      My Donation Requests
                     </span>
                   </NavLink>
                 </li>
               </>
-            )} */}
+            )}
 
-            {/* admin only */}
-            {/* {role === "admin" && (
+            {/* ADMIN MENU */}
+            {!roleLoading && role === "admin" && (
               <>
+                <li className="mt-2 menu-title is-drawer-close:hidden">
+                  <span>Admin</span>
+                </li>
+
                 <li>
                   <NavLink
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Approve Rider"
-                    to="/dashboard/approve-riders"
+                    data-tip="All Users"
+                    to="/dashboard/all-users"
                   >
-                    <FaMotorcycle></FaMotorcycle>
-                    <span className="is-drawer-close:hidden">
-                      Approve Rider
-                    </span>
+                    <FaUser />
+                    <span className="is-drawer-close:hidden">All Users</span>
                   </NavLink>
                 </li>
+
                 <li>
                   <NavLink
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Assign Rider"
-                    to="/dashboard/assign-riders"
+                    data-tip="All Blood Donation Requests"
+                    to="/dashboard/all-blood-donation-request"
                   >
-                    <RiBikeFill></RiBikeFill>
-                    <span className="is-drawer-close:hidden">Assign Rider</span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Users Management"
-                    to="/dashboard/users-management"
-                  >
-                    <FaUser></FaUser>
+                    <SiGoogletasks />
                     <span className="is-drawer-close:hidden">
-                      Users Management
+                      All Blood Donation Requests
                     </span>
                   </NavLink>
                 </li>
               </>
-            )} */}
+            )}
 
-            {/* List item */}
-            <li>
+            {/* VOLUNTEER MENU */}
+            {!roleLoading && role === "volunteer" && (
+              <>
+                <li className="mt-2 menu-title is-drawer-close:hidden">
+                  <span>Volunteer</span>
+                </li>
+
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="All Blood Donation Requests"
+                    to="/dashboard/all-blood-donation-request"
+                  >
+                    <SiGoogletasks />
+                    <span className="is-drawer-close:hidden">
+                      All Blood Donation Requests
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* Settings or future menu */}
+            <li className="mt-auto">
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Settings"
