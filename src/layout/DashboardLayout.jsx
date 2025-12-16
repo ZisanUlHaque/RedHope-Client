@@ -1,13 +1,12 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
-
-// icons
 import { IoCreateOutline } from "react-icons/io5";
 import { IoMdGitPullRequest } from "react-icons/io";
 import { SiGoogletasks } from "react-icons/si";
-import { FaUser } from "react-icons/fa";
+import { FaHome, FaUser } from "react-icons/fa";
 
 import useRole from "../hooks/useRole";
+import { CgProfile } from "react-icons/cg";
 
 const DashboardLayout = () => {
   const { role, roleLoading } = useRole();
@@ -16,14 +15,14 @@ const DashboardLayout = () => {
     <div className="drawer lg:drawer-open max-w-7xl mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        {/* Navbar */}
+        
         <nav className="navbar w-full bg-base-300">
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
             className="btn btn-square btn-ghost lg:hidden"
           >
-            {/* Sidebar toggle icon */}
+          
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -42,7 +41,7 @@ const DashboardLayout = () => {
           <div className="px-4 font-semibold">Blood Donation Dashboard</div>
         </nav>
 
-        {/* Page content here */}
+        
         <div className="p-4 md:p-6">
           <Outlet />
         </div>
@@ -55,16 +54,15 @@ const DashboardLayout = () => {
           className="drawer-overlay"
         ></label>
         <div className="flex min-height-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
+          
           <ul className="menu w-full grow">
-            {/* Home / Dashboard common links */}
             <li>
               <Link
                 to="/"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Homepage"
               >
-                {/* Home icon */}
+                
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -88,14 +86,23 @@ const DashboardLayout = () => {
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Dashboard Home"
               >
-                <SiGoogletasks />
+                <FaHome />
                 <span className="is-drawer-close:hidden">Dashboard Home</span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard/profile">Profile</NavLink>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Profile"
+                to="/dashboard/profile"
+              >
+                <CgProfile />
+                <span className="is-drawer-close:hidden">
+                  Profile
+                </span>
+              </NavLink>
             </li>
-            {/* LOADING state */}
+            
             {roleLoading && (
               <li>
                 <span className="flex items-center gap-2">
@@ -105,7 +112,6 @@ const DashboardLayout = () => {
               </li>
             )}
 
-            {/* DONOR MENU */}
             {!roleLoading && role === "donor" && (
               <>
                 <li className="mt-2 menu-title is-drawer-close:hidden">
@@ -138,7 +144,6 @@ const DashboardLayout = () => {
               </>
             )}
 
-            {/* ADMIN MENU */}
             {!roleLoading && role === "admin" && (
               <>
                 <li className="mt-2 menu-title is-drawer-close:hidden">
@@ -171,7 +176,6 @@ const DashboardLayout = () => {
               </>
             )}
 
-            {/* VOLUNTEER MENU */}
             {!roleLoading && role === "volunteer" && (
               <>
                 <li className="mt-2 menu-title is-drawer-close:hidden">
@@ -193,13 +197,11 @@ const DashboardLayout = () => {
               </>
             )}
 
-            {/* Settings or future menu */}
             <li className="mt-auto">
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Settings"
               >
-                {/* Settings icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
