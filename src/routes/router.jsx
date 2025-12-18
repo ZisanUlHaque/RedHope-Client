@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
         loader: async ({ params }) => {
           const { id } = params;
           const donation = await fetch(
-            `http://https://red-hope-server-alpha.vercel.app/donation-requests/${id}`
+            `https://red-hope-server-alpha.vercel.app/donation-requests/${id}`
           ).then((res) => res.json());
           return { donation };
         },
