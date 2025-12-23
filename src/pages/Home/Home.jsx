@@ -5,6 +5,7 @@ import ContactUs from './ContactUs';
 import Divider from './Divider';
 import HowItWorks from './HowItWorks';
 import BloodDonationFeatures from './BloodDonationFeatures';
+import TestimonialsSection from './TestimonialsSection';
 
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
             <Divider></Divider>
             <HowItWorks></HowItWorks>
             <BloodDonationFeatures></BloodDonationFeatures>
+            <TestimonialsSection></TestimonialsSection>
         </div>
     );
 };
