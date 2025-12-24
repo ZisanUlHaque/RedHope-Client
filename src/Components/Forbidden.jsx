@@ -1,9 +1,11 @@
 import React from 'react';
+import forbiddenPic from '../assets/error.jpg'; 
 import { Link } from 'react-router';
 
 const Forbidden = () => {
   return (
     <div className="bg-red-100 min-h-screen flex flex-col justify-center items-center text-center">
+      <img className="w-1/4 mb-6" src={forbiddenPic} alt="Access Forbidden"/>
       <h1 className="text-6xl font-bold text-red-700">Access Denied</h1>
       <p className="mt-5 text-gray-600 max-w-md">
         You do not have permission to access this page.
